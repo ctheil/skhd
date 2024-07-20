@@ -11,7 +11,7 @@ shift + cmd - k : yabai -m window --swap north || yabai -m window --display nort
 shift + cmd - h : yabai -m window --swap west || yabai -m window --display west; yabai -m display --focus west
 shift + cmd - l : yabai -m window --swap east || yabai -m window --display east; yabai -m display --focus east
 # rotate layout clockwise
-shift + cmd - r : yabai -m space --rotate 270
+# shift + cmd - r : yabai -m space --rotate 270
 
 # flip along y-axis
 shift + alt - y : yabai -m space --mirror y-axis
@@ -23,11 +23,39 @@ shift + alt - x : yabai -m space --mirror x-axis
 shift + cmd - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 # maximize a window
-cmd - return : yabai -m window --toggle zoom-fullscreen
+shift + cmd - f : yabai -m window --toggle zoom-fullscreen
 
 # balance out tree of windows (resize to occupy same area)
 shift + alt - e : yabai -m space --balance
 
+# RESIZE MODE
+# defines a new mode 'resize' with an on_enter command, that captures keypresses
+:: resize @ : yabai -m config active_window_opacity 1; yabai -m config normal_window_opacity 0.9;
+
+# from 'default' mode, activate mode 'resize'
+# (this is the key combination you want to use to enter resize mode)
+ctrl - escape ; resize
+cmd - r; resize
+alt + ctrl - 0x32 ; resize
+
+# from 'resize' mode, active mode 'default'
+# (this is the keypress required to leave resize mode)
+resize < escape ; default
+resize < 0x32 ; default 
+
+# equalize windows then exit to default
+resize < b : yabai -m space --balance && default
+
+# increase window size
+resize < h : yabai -m window --resize left:-25:0 || yabai -m window --resize right:-25:0
+resize < j : yabai -m window --resize bottom:0:25  || yabai -m window --resize bottom:-25:0
+resize < k : yabai -m window --resize top:0:-25 || yabai -m window --resize top:0:25
+resize < l : yabai -m window --resize right:25:0  || yabai -m window --resize left:25:0
+
+
+
+
+cmd - return : /Applications/Alacritty.app/Contents/MacOS/alacritty
 
 # move window and split
 ctrl + alt - j : yabai -m window --warp south
@@ -58,5 +86,7 @@ shift + cmd - 0 : yabai -m window --space 10;
 # stop/start/restart yabai
 ctrl + alt - q : brew services stop yabai
 ctrl + alt - s : brew services start yabai
-ctrl + alt - r : brew services restart yabai
+# ctrl + alt - r : brew services restart yabai
+
+shift + cmd -r : yabai --restart-service
 
