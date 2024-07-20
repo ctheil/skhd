@@ -30,7 +30,7 @@ shift + alt - e : yabai -m space --balance
 
 # RESIZE MODE
 # defines a new mode 'resize' with an on_enter command, that captures keypresses
-:: resize @ : yabai -m config active_window_opacity 1; yabai -m config normal_window_opacity 0.9;
+:: resize @ : yabai -m config active_window_opacity 1; yabai -m config normal_window_opacity 1;
 
 # from 'default' mode, activate mode 'resize'
 # (this is the key combination you want to use to enter resize mode)
@@ -44,7 +44,7 @@ resize < escape ; default
 resize < 0x32 ; default 
 
 # equalize windows then exit to default
-resize < b : yabai -m space --balance && default
+resize < b : yabai -m space --balance
 
 # increase window size
 resize < h : yabai -m window --resize left:-25:0 || yabai -m window --resize right:-25:0
